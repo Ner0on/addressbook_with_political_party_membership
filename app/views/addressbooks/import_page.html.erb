@@ -1,0 +1,26 @@
+<div class="page-header">
+  <h3>Import to <%= @addressbook.name %> from CSV</h3>
+  <%= link_to addressbooks_path do %>
+    <i class="fa fa-arrow-left"></i>
+    Back
+  <% end %>
+</div>
+<div class="col-md-4">
+  <% if @addressbook.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@contact.errors.count, "error") %> while saving contact:</h4>
+      <ul>
+        <% @addressbook.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_tag(addressbook_import_path(format: :csv), multipart: true) do %>
+    <div class="form-group">
+      <%= file_field_tag :file %>
+    </div>
+    <%= submit_tag "Import", class: 'btn btn-success'%>
+  <% end %>
+</div>

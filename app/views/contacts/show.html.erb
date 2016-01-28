@@ -1,0 +1,57 @@
+<div class="page-header">
+  <h3>Personal <small>information</small></h3>
+
+  <%= link_to addressbook_contacts_path do %>
+    <i class="fa fa-arrow-left"></i>
+    Back
+  <% end %>
+</div>
+
+
+<p id="notice"><%= notice %></p>
+
+<div class="col-md-12 well">
+  <div class="col-md-3">
+    <p><h3><i class="fa fa-user"></i> <small><%= full_name(@contact.name, @contact.last_name)  %></small></h3></p>
+    <p><h3><i class="fa fa-phone-square"></i> <small><%= @contact.phone %></small></h3></p>  
+    <p><h3><i class="fa fa-envelope"></i> <small><%= @contact.email %></small></h3></p>
+    <p><h3>ID:<small> <%= @contact.id_number %></small></h3></p>
+  </div>
+  <div class="col-md-9">
+  <h4>Political party</h4>
+  <hr>
+    <% if @contact.political_party_membership.present? %>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Isiku ees- ja perekonnanim</th>
+            <th>Sünniaeg</th>
+            <th>Erakonna nimi</th>
+            <th>Erakonna kood</th>
+            <th>Erakonna staatus</th>
+            <th>Liikmeks astumise aeg</th>
+            <th>Väljaastumise või väljaarvamise teate esitamise või teadasaamise aeg</th>
+            <th>Erakondliku kuuluvuse peatamine</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% JSON.parse(@contact.political_party_membership["data"]).each do |political_member| %>
+          <tr>
+            <td><%= political_member["full_name"] %></td>
+            <td><%= political_member["birthdate"]%></td>
+            <td><%= political_member["political_party_name"] %></td>
+            <td><%= political_member["political_party_code"]%></td>
+            <td><%= political_member["political_party_status"]%></td>
+            <td><%= political_member["engagement_date"]%></td>
+            <td><%= political_member["resignation_date"]%></td>
+            <td><%= political_member["suspension_date"]%></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>Information is not available, send inquiry?</p>
+    <% end %>
+  </div>
+  <%= link_to 'Send inquiry', addressbook_contact_send_inquiry_path(params[:addressbook_id], @contact), class: 'btn btn-primary pull-right'%>
+</div>    

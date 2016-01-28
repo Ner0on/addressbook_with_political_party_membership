@@ -1,0 +1,64 @@
+<div class="page-header">
+  <h3>Addressbooks</h3>
+</div>
+
+<div class="col-md-6">
+  <p id="notice"><%= notice %></p>
+  <% if @addressbooks.present? %>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Total Contacts</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @addressbooks.each do |addressbook| %>
+          <tr>
+            <td><%= link_to addressbook.name, addressbook_contacts_path(addressbook) %></td>
+            <td><%= "#{addressbook.contacts.count}/#{Rails.configuration.max_contacts}" %></td>
+            <td>
+
+              <%= link_to addressbook_contacts_path(addressbook), class: 'btn btn-default btn-xs' do %>
+                  <i class="fa fa-search"></i>
+                  View
+              <% end %>
+              
+              <%= link_to addressbook_export_path(addressbook,format: :csv), class: 'btn btn-primary btn-xs' do %>
+                  <i class="fa fa-file"></i>
+                  Export
+              <% end %>
+
+              <%= link_to addressbook_import_page_path(addressbook), class: 'btn btn-warning btn-xs' do %>
+                  <i class="fa fa-share"></i>  
+                  Import
+              <% end %>
+              
+              <%= link_to addressbook, method: :delete do %>
+                <button class="btn btn-danger btn-xs">
+                 <i class="fa fa-trash-o"></i>
+                  Delete
+                </button>
+              <% end %>
+
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <h3 class="text-muted">You dont have any address book yet</h3>
+  <% end %>
+</div>
+
+<div class="col-md-4 pull-right">
+  <%= link_to new_addressbook_path do %>
+    <button class="btn btn-success pull-right">
+      <i class="fa fa-plus"></i>
+      New Address Book
+    </button>
+  <% end %>   
+</div>
+
+

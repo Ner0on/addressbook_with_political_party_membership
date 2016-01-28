@@ -1,0 +1,5 @@
+1.bundle install
+2.rake db:migrate
+3.rails server
+4.redis-server
+5.bundle exec sidekiq

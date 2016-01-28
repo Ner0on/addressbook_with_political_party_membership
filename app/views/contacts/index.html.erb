@@ -1,0 +1,65 @@
+<div class="page-header">
+  <h1><%= @addressbook.name %> <small>contacts  <%="#{@addressbook.contacts.count}/#{Rails.configuration.max_contacts }"%></small></h1>
+
+  <%= link_to root_path do %>
+    <i class="fa fa-arrow-left"></i>
+    Back
+  <% end %>
+</div>
+
+<div class="col-md-8">
+<p id="notice"><%= notice %></p>
+
+  <% if @contacts.present? %>
+    <table class="table table-bordered contacts">
+      <thead>
+        <tr>
+          <th data-sort="string">Name <i class="fa fa-caret-up"></i></th>
+          <th data-sort="string">Last name <i class="fa fa-caret-up"></i></th>
+          <th data-sort="int">Phone <i class="fa fa-caret-up"></i></th>
+          <th>Email</th>
+          <th data-sort="int">Id number <i class="fa fa-caret-up"></i></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @contacts.each do |contact| %>
+          <tr>
+            <td><%= contact.name %> </td>
+            <td><%= contact.last_name %></td>
+            <td><%= contact.phone %></td>
+            <td><%= contact.email %></td>
+            <td><%= contact.id_number %></td>
+            <td>
+              <%= link_to addressbook_contact_path(@addressbook, contact), class: 'btn btn-info btn-xs' do %>
+                  <i class="fa fa-search"></i>
+                  View
+              <% end %>
+
+              <%= link_to addressbook_contact_path(@addressbook, contact),method: :delete do %>
+                <button class="btn btn-danger btn-xs">
+                  <i class="fa fa-trash-o"></i>
+                  Delete
+                </button>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <h4 class="text-muted">You dont have any contanct in this Book</h4>
+  <% end %>
+  <%= will_paginate @contacts, renderer: BootstrapPagination::Rails %>
+</div>
+
+<%= link_to new_addressbook_contact_path do %>
+  <button class="btn btn-success pull-right">
+    <i class="fa fa-user"></i>
+    New Contact
+  </button>
+<% end %>
+
+<script>
+  $(".contacts").stupidtable();
+</script>

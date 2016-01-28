@@ -1,0 +1,35 @@
+<%= simple_form_for(@contact, :url => addressbook_contacts_path(@addressbook)) do |f| %>
+  <div class="col-md-6">
+    
+    <% if @contact.errors.any? %>
+      <div class="alert alert-danger">
+        <h4><%= pluralize(@contact.errors.count, "error") %> while saving contact:</h4>
+        <ul>
+          <% @contact.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.input :name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.input :last_name, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.input :phone ,class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.input :email,class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.input :id_number,class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.submit class: 'btn btn-success' %>
+    </div>
+  </div>
+
+<% end %>
